@@ -1,0 +1,3 @@
+[submodule "codebuild-cloudfoundary/aws-codebuild-docker-images"]
+	path = codebuild-cloudfoundary/aws-codebuild-docker-images
+	url = git@github.com:aws/aws-codebuild-docker-images.git
