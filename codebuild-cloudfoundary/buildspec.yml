@@ -1,6 +1,10 @@
 version: 0.2
 
 phases:
-  aws-image:
+  build-image:
     commands:
-      - echo "it worked"
+      - git submodule init
+      - git submodule update
+      - cd codebuild-cloudfoundry
+      - docker build -t aws-standard-ubuntu aws-codebuild-docker-images/ubuntu/standard/2.0
+      - docker build -t codebuild-cloudfoundary ./
