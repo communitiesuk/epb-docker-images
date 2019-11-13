@@ -1,3 +1,3 @@
 # EPB Docker Images
 
-* `codebuild-cloudfoundary` - AWS ubuntu standard image with cloudfoundary installed.
+* `codebuild-cloudfoundry` - AWS ubuntu standard image with cloudfoundry installed.
