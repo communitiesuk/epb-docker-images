@@ -21,3 +21,4 @@ phases:
     commands:
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker run $REPOSITORY_URI "cf --help"
