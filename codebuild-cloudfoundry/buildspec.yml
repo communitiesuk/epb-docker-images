@@ -1,12 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      docker: 18
-    commands:
-      - cd codebuild-cloudfoundry
-      - git clone https://github.com/aws/aws-codebuild-docker-images.git
   pre_build:
     commands:
       - aws --version
