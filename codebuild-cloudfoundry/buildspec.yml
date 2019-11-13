@@ -5,8 +5,8 @@ phases:
     runtime-versions:
       docker: 18
     commands:
-      - git submodule init
-      - git submodule update
+      - cd codebuild-cloudfoundry
+      - git clone git@github.com:aws/aws-codebuild-docker-images.git
   build:
     commands:
       - cd codebuild-cloudfoundry
