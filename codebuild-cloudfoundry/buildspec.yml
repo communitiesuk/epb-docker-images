@@ -8,8 +8,6 @@ phases:
       - git submodule init
       - git submodule update
   build:
-    runtime-versions:
-      docker: 18
     commands:
       - cd codebuild-cloudfoundry
       - docker build -t aws-standard-ubuntu aws-codebuild-docker-images/ubuntu/standard/2.0
