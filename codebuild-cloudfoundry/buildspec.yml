@@ -6,7 +6,7 @@ phases:
       docker: 18
     commands:
       - cd codebuild-cloudfoundry
-      - git clone git@github.com:aws/aws-codebuild-docker-images.git
+      - git clone https://github.com/aws/aws-codebuild-docker-images.git
   build:
     commands:
       - cd codebuild-cloudfoundry
