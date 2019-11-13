@@ -9,7 +9,7 @@ phases:
       - IMAGE_TAG=${COMMIT_HASH:=latest}
   build:
     commands:
-      - docker build -t aws-standard-ubuntu aws-codebuild-docker-images/ubuntu/standard/2.0
+      - docker build -t aws-standard-ubuntu aws-codebuild-docker/ubuntu/standard/2.0
       - docker build -t $REPOSITORY_URI ./
   post_build:
     commands:
