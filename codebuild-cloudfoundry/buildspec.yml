@@ -21,7 +21,7 @@ phases:
 
   post_build:
     commands:
+      - docker run --entrypoint "cf" $REPOSITORY_URI
       - docker push $REPOSITORY_URI:latest
       - docker tag $REPOSITORY_URI $REPOSITORY_URI:$IMAGE_TAG
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - docker run --entrypoint "cf" $REPOSITORY_URI
