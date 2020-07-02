@@ -6,4 +6,22 @@ RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.k
     && apt-get install cf-cli \
     && apt-get clean
 
+RUN gem install bundler:2.1.4
+
+RUN mkdir bundle-deps \
+    && cd bundle-deps \
+    && wget -q https://raw.githubusercontent.com/communitiesuk/epb-register-api/master/Gemfile \
+    && wget -q https://raw.githubusercontent.com/communitiesuk/epb-register-api/master/Gemfile.lock \
+    && bundle install \
+    && cd .. \
+    && rm -r bundle-deps
+
+RUN mkdir bundle-deps \
+    && cd bundle-deps \
+    && wget -q https://raw.githubusercontent.com/communitiesuk/epb-frontend/master/Gemfile \
+    && wget -q https://raw.githubusercontent.com/communitiesuk/epb-frontend/master/Gemfile.lock \
+    && bundle install \
+    && cd .. \
+    && rm -r bundle-deps
+
 ENTRYPOINT ["dockerd-entrypoint.sh"]
