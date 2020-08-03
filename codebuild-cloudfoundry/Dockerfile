@@ -6,8 +6,6 @@ RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.k
     && apt-get install cf-cli \
     && apt-get clean
 
-RUN gem install bundler:2.1.4
-
 RUN mkdir bundle-deps \
     && cd bundle-deps \
     && wget -q https://raw.githubusercontent.com/communitiesuk/epb-register-api/master/Gemfile \
