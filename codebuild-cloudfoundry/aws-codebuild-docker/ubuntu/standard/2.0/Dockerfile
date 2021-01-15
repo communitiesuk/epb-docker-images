@@ -132,7 +132,7 @@ RUN set -ex \
     && git clone https://github.com/rbenv/ruby-build.git $RUBY_BUILD_SRC_DIR \
     && sh $RUBY_BUILD_SRC_DIR/install.sh \
     && rbenv install $RUBY_VERSION && rbenv global $RUBY_VERSION \
-    && gem install bundler:2.1.4
+    && gem install bundler:2.2.5
 
 #**************** END RUBY *****************************************************
 
