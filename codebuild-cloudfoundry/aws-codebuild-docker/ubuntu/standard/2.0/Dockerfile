@@ -11,7 +11,7 @@
 
 FROM ubuntu:18.04
 
-ENV RUBY_VERSION="2.6.6" \
+ENV RUBY_VERSION="2.7.2" \
  PYTHON_VERSION="3.7.4" \
  NODE_VERSION="10.16.3" \
  NODE_8_VERSION="8.16.0" \
@@ -132,7 +132,7 @@ RUN set -ex \
     && git clone https://github.com/rbenv/ruby-build.git $RUBY_BUILD_SRC_DIR \
     && sh $RUBY_BUILD_SRC_DIR/install.sh \
     && rbenv install $RUBY_VERSION && rbenv global $RUBY_VERSION \
-    && gem install bundler:2.1.4
+    && gem install bundler:2.2.16
 
 #**************** END RUBY *****************************************************
 

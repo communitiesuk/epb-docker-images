@@ -8,10 +8,10 @@ runtimes:
           - echo "Installing Python version 3.7 ..."
   ruby:
     versions:
-      2.6:
+      2.7.2:
         commands:
-          - echo "Installing Ruby version 2.6 ..."
-          - rbenv global 2.6.6
+          - echo "Installing Ruby version 2.7.2 ..."
+          - rbenv global 2.7.2
   nodejs:
     versions:
       10:
