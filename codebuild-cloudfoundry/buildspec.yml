@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      docker: 18
+      docker: 19
     commands:
       - cd codebuild-cloudfoundry/
 
@@ -16,7 +16,7 @@ phases:
 
   build:
     commands:
-      - docker build -t aws-standard-ubuntu aws-codebuild-docker/ubuntu/standard/2.0
+      - docker build -t aws-standard-ubuntu aws-codebuild-docker/ubuntu/standard/5.0
       - docker build -t $REPOSITORY_URI ./
 
   post_build:

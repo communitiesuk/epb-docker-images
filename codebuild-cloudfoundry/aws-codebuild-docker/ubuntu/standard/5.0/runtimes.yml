@@ -1,0 +1,37 @@
+version: 0.1
+
+runtimes:
+  python:
+    versions:
+      3.7:
+        commands:
+          - echo "Installing Python version 3.7 ..."
+          - pyenv global  $PYTHON_37_VERSION
+      3.8:
+        commands:
+          - echo "Installing Python version 3.8 ..."
+          - pyenv global  $PYTHON_38_VERSION
+      3.9:
+        commands:
+          - echo "Installing Python version 3.9 ..."
+          - pyenv global  $PYTHON_39_VERSION
+  ruby:
+    versions:
+      2.6:
+        commands:
+          - echo "Installing Ruby version 2.6 ..."
+          - rbenv global $RUBY_26_VERSION
+      2.7:
+        commands:
+          - echo "Installing Ruby version 2.7 ..."
+          - rbenv global $RUBY_27_VERSION
+  nodejs:
+    versions:
+      12:
+        commands:
+          - echo "Installing Node.js version 12 ..."
+          - n $NODE_12_VERSION
+      14:
+        commands:
+          - echo "Installing Node.js version 14 ..."
+          - n $NODE_14_VERSION
