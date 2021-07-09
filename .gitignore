@@ -1,0 +1,4 @@
+# Jetbrains
+.idea
+# Ignore OSX .DS_Store
+.DS_Store
