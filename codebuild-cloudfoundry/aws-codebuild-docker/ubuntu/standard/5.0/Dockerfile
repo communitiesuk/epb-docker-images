@@ -66,6 +66,7 @@ RUN set -ex \
     && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google.list \
     && apt-get update \
     && apt-get install -y google-chrome-stable \
+    && sed -i 's|HERE/chrome"|HERE/chrome" --disable-setuid-sandbox --no-sandbox|g' "/opt/google/chrome/google-chrome" \
     && google-chrome --version
 
 # Install ChromeDriver
@@ -224,6 +225,7 @@ FROM runtimes_n_corretto AS std_v5
 RUN n $NODE_14_VERSION
 RUN pyenv  global $PYTHON_39_VERSION
 RUN rbenv  global $RUBY_27_VERSION
+RUN gem install bundler:2.2.16
 
 # Configure SSH
 COPY ssh_config /root/.ssh/config
