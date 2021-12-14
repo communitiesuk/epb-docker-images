@@ -4,7 +4,7 @@ RUN wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.k
     && echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list \
     && apt-get update \
     && apt-get install cf7-cli \
-    && cf install-plugin -r CF-Community app-autoscaler-plugin \
+    && cf install-plugin -r CF-Community app-autoscaler-plugin -f \
     && apt-get clean
 
 RUN mkdir bundle-deps \
