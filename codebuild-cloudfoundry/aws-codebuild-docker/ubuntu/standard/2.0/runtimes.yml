@@ -15,6 +15,7 @@ runtimes:
       3.0:
         commands:
           - echo "Installing Ruby version 3.0.3 ..."
+          - rbenv install 3.0.3
           - rbenv global 3.0.3
   nodejs:
     versions:
