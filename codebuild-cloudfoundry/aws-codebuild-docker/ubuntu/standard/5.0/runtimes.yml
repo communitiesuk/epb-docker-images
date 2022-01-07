@@ -17,10 +17,6 @@ runtimes:
           - pyenv global  $PYTHON_39_VERSION
   ruby:
     versions:
-      2.6:
-        commands:
-          - echo "Installing Ruby version 2.6 ..."
-          - rbenv global $RUBY_26_VERSION
       2.7:
         commands:
           - echo "Installing Ruby version 2.7 ..."
