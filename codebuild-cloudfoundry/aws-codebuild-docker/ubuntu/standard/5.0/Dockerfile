@@ -142,8 +142,8 @@ RUN     n $NODE_14_VERSION && npm install --save-dev -g -f grunt && npm install 
 
 #**************** RUBY *********************************************************
 
-ENV RUBY_27_VERSION="2.7.3"
-ENV RUBY_30_VERSION="3.0.2"
+ENV RUBY_27_VERSION="2.7.5"
+ENV RUBY_30_VERSION="3.0.3"
 
 RUN rbenv install $RUBY_30_VERSION; rm -rf /tmp/*
 RUN rbenv install $RUBY_27_VERSION; rm -rf /tmp/*; rbenv global $RUBY_27_VERSION;ruby -v
