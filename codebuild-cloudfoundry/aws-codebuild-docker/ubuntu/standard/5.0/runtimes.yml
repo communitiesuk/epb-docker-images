@@ -25,6 +25,10 @@ runtimes:
         commands:
           - echo "Installing Ruby version 3.0 ..."
           - rbenv global $RUBY_30_VERSION
+      3.1:
+        commands:
+          - echo "Installing Ruby version 3.1 ..."
+          - rbenv global $RUBY_31_VERSION
   nodejs:
     versions:
       12:
