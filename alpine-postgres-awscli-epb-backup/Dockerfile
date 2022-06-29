@@ -8,3 +8,9 @@ RUN apk add --no-cache \
     && pip3 install --no-cache-dir \
         awscli \
     && rm -rf /var/cache/apk/*
+
+VOLUME /root/.aws
+
+ADD run.sh /run.sh
+
+ENTRYPOINT [ "/run.sh" ]
