@@ -1,9 +1,0 @@
-FROM alpine:3.15
-
-# Install required packages
-RUN apk add --update --no-cache bash dos2unix
-
-WORKDIR /usr/
-
-
-
