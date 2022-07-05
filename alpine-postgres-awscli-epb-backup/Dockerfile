@@ -11,6 +11,6 @@ RUN apk add --no-cache \
 
 VOLUME /root/.aws
 
-COPY scripts/run.sh /run.sh
-RUN ["chmod", "+x", "/run.sh"]
-ENTRYPOINT ["sh","/run.sh"]
+COPY scripts/run.sh usr/bin/run.sh
+RUN ["chmod", "+x", "usr/bin/run.sh"]
+ENTRYPOINT ["sh","usr/bin/run.sh"]
