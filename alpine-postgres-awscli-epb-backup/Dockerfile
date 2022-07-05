@@ -14,3 +14,5 @@ VOLUME /root/.aws
 COPY scripts/run.sh usr/bin/run.sh
 RUN ["chmod", "+x", "usr/bin/run.sh"]
 ENTRYPOINT ["sh","usr/bin/run.sh"]
+
+CMD ["usr/bin/run.sh"]
