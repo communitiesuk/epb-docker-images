@@ -2,12 +2,9 @@
 
 set -eu
 
-now=$(date)
 
-echo "Date container stared is: $now"
-# check AWS credentials and bucket working
-S3_BASE_URI=s3://${S3_BUCKET:?required}
+S3_BASE_URI=s3://${BUCKET_NAME:?required}
 
-echo "Testing AWS credentials to access ${S3_BASE_URI}"
-aws s3 ls "${S3_BASE_URI}/"
+echo ">>>> UPLOADING FILE S3"
+aws s3 rm buildspec.yml "${S3_BASE_URI}/buildspec.yml"
 
