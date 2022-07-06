@@ -12,7 +12,7 @@ RUN apk add --no-cache \
 
 VOLUME /root/.aws
 
-COPY scripts/run.sh /run.sh
+COPY scripts/run.sh /user/bin/run.sh
 ENTRYPOINT ["sh"]
 
 CMD ["/run.sh"]
