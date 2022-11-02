@@ -220,8 +220,8 @@ FROM runtimes_n_corretto AS std_v5
 # Activate runtime versions specific to image version.
 RUN n $NODE_16_VERSION
 RUN pyenv  global $PYTHON_39_VERSION
-RUN rbenv  global $RUBY_27_VERSION
-RUN gem install bundler:2.2.16
+RUN rbenv  global $RUBY_31_VERSION
+RUN gem install bundler:2.3.22
 
 # Configure SSH
 COPY ssh_config /root/.ssh/config
