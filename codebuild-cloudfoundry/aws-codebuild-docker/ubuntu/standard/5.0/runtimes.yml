@@ -23,14 +23,6 @@ runtimes:
           - rbenv global $RUBY_31_VERSION
   nodejs:
     versions:
-      12:
-        commands:
-          - echo "Installing Node.js version 12 ..."
-          - n $NODE_12_VERSION
-      14:
-        commands:
-          - echo "Installing Node.js version 14 ..."
-          - n $NODE_14_VERSION
       16:
         commands:
           - echo "Installing Node.js version 16 ..."
