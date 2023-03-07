@@ -5,6 +5,7 @@ phases:
     runtime-versions:
       docker: 18
     commands:
+      - cd aws-ruby-node
 
   pre_build:
     commands:
