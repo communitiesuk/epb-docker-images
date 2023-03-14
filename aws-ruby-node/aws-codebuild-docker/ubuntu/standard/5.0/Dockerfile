@@ -155,35 +155,18 @@ RUN rbenv install $RUBY_31_VERSION; rm -rf /tmp/*; rbenv global $RUBY_31_VERSION
 #**************** END RUBY *****************************************************
 
 #**************** PYTHON *****************************************************
-ENV PYTHON_37_VERSION="3.7.10"
-ENV PYTHON_38_VERSION="3.8.8"
-ENV PYTHON_39_VERSION="3.9.2"
+ENV PYTHON_3_11_VERSION="3.11.2"
 
-ARG PYTHON_PIP_VERSION=20.3.3
+ARG PYTHON_PIP_VERSION=23.0.1
 
-COPY tools/runtime_configs/python/$PYTHON_37_VERSION /root/.pyenv/plugins/python-build/share/python-build/$PYTHON_37_VERSION
-RUN   env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install $PYTHON_37_VERSION; rm -rf /tmp/*
-RUN   pyenv global  $PYTHON_37_VERSION
+COPY tools/runtime_configs/python/$PYTHON_3_11_VERSION /root/.pyenv/plugins/python-build/share/python-build/$PYTHON_3_11_VERSION
+RUN   env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install $PYTHON_3_11_VERSION; rm -rf /tmp/*
+RUN   pyenv global  $PYTHON_3_11_VERSION
 RUN set -ex \
     && pip3 install --no-cache-dir --upgrade --force-reinstall "pip==$PYTHON_PIP_VERSION" \
     && pip3 install --no-cache-dir --upgrade "PyYAML==5.3.1" \
-    && pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli boto3 pipenv virtualenv --use-feature=2020-resolver
-
-COPY tools/runtime_configs/python/$PYTHON_38_VERSION /root/.pyenv/plugins/python-build/share/python-build/$PYTHON_38_VERSION
-RUN   env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install $PYTHON_38_VERSION; rm -rf /tmp/*
-RUN   pyenv global  $PYTHON_38_VERSION
-RUN set -ex \
-    && pip3 install --no-cache-dir --upgrade --force-reinstall "pip==$PYTHON_PIP_VERSION" \
-    && pip3 install --no-cache-dir --upgrade "PyYAML==5.3.1" \
-    && pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli boto3 pipenv virtualenv --use-feature=2020-resolver
-
-COPY tools/runtime_configs/python/$PYTHON_39_VERSION /root/.pyenv/plugins/python-build/share/python-build/$PYTHON_39_VERSION
-RUN   env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install $PYTHON_39_VERSION; rm -rf /tmp/*
-RUN   pyenv global  $PYTHON_39_VERSION
-RUN set -ex \
-    && pip3 install --no-cache-dir --upgrade --force-reinstall "pip==$PYTHON_PIP_VERSION" \
-    && pip3 install --no-cache-dir --upgrade "PyYAML==5.3.1" \
-    && pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli boto3 pipenv virtualenv --use-feature=2020-resolver
+    && pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli boto3 pipenv virtualenv --use-feature=2020-resolver \
+RUN printf "EPB-DEBUG: Python $PYTHON_3_11_VERSION and PIP $PYTHON_PIP_VERSION installed."
 
 #**************** END PYTHON *****************************************************
 
@@ -227,7 +210,7 @@ FROM runtimes_n_corretto AS std_v5
 
 # Activate runtime versions specific to image version.
 RUN n $NODE_16_VERSION
-RUN pyenv  global $PYTHON_39_VERSION
+RUN pyenv  global $PYTHON_3_11_VERSION
 RUN rbenv  global $RUBY_31_VERSION
 RUN gem install bundler:2.3.22
 

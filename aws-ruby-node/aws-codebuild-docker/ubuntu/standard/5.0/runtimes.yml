@@ -3,18 +3,10 @@ version: 0.1
 runtimes:
   python:
     versions:
-      3.7:
+      3.11:
         commands:
-          - echo "Installing Python version 3.7 ..."
-          - pyenv global  $PYTHON_37_VERSION
-      3.8:
-        commands:
-          - echo "Installing Python version 3.8 ..."
-          - pyenv global  $PYTHON_38_VERSION
-      3.9:
-        commands:
-          - echo "Installing Python version 3.9 ..."
-          - pyenv global  $PYTHON_39_VERSION
+          - echo "Installing Python version 3.11 ..."
+          - pyenv global  $PYTHON_3_11_VERSION
   ruby:
     versions:
       3.1:
