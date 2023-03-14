@@ -157,15 +157,15 @@ RUN rbenv install $RUBY_31_VERSION; rm -rf /tmp/*; rbenv global $RUBY_31_VERSION
 #**************** PYTHON *****************************************************
 ENV PYTHON_3_11_VERSION="3.11.2"
 
-ARG PYTHON_PIP_VERSION=23.0.1
+ARG PYTHON_PIP_VERSION=22.3.1
 
 COPY tools/runtime_configs/python/$PYTHON_3_11_VERSION /root/.pyenv/plugins/python-build/share/python-build/$PYTHON_3_11_VERSION
 RUN   env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install $PYTHON_3_11_VERSION; rm -rf /tmp/*
 RUN   pyenv global  $PYTHON_3_11_VERSION
 RUN set -ex \
     && pip3 install --no-cache-dir --upgrade --force-reinstall "pip==$PYTHON_PIP_VERSION" \
-    && pip3 install --no-cache-dir --upgrade "PyYAML==5.3.1" \
-    && pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli boto3 pipenv virtualenv --use-feature=2020-resolver \
+    && pip3 install --no-cache-dir --use-pep517 --upgrade "PyYAML==6.0" \
+    && pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli boto3 pipenv virtualenv \
 RUN printf "EPB-DEBUG: Python $PYTHON_3_11_VERSION and PIP $PYTHON_PIP_VERSION installed."
 
 #**************** END PYTHON *****************************************************
