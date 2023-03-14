@@ -68,7 +68,7 @@ RUN set -ex \
     && apt-get install -y google-chrome-stable \
     && sed -i 's|HERE/chrome"|HERE/chrome" --disable-setuid-sandbox --no-sandbox|g' "/opt/google/chrome/google-chrome" \
     && google-chrome --version \
-    && printf "EPB-DEBUG: Chrome installed."
+    && printf "EPB-DEBUG: Chrome installed.\n"
 
 # Install ChromeDriver
 RUN set -ex \
@@ -81,7 +81,7 @@ RUN set -ex \
     && chmod 755 /opt/chromedriver-$CHROME_DRIVER_VERSION \
     && ln -s /opt/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver \
     && chromedriver --version \
-    && printf "EPB-DEBUG: Chromedriver installed."
+    && printf "EPB-DEBUG: Chromedriver installed.\n"
 
 # AWS Tools
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html
@@ -90,7 +90,7 @@ RUN curl -sS -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3.us-we
     && curl -sS -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest \
     && curl -sS -L https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz | tar xz -C /usr/local/bin \
     && chmod +x /usr/local/bin/kubectl /usr/local/bin/aws-iam-authenticator /usr/local/bin/ecs-cli /usr/local/bin/eksctl \
-    && printf "EPB-DEBUG: AWS tools installed."
+    && printf "EPB-DEBUG: AWS tools installed.\n"
 
 # Install AWS CLI v2
 # https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
@@ -100,7 +100,7 @@ RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscli
     && rm /tmp/awscliv2.zip \
     && rm -rf /opt/aws \
     && aws --version \
-    && printf "EPB-DEBUG: AWS CLI v2 installed."
+    && printf "EPB-DEBUG: AWS CLI v2 installed.\n"
 
 # Install env tools for runtimes
 
@@ -141,7 +141,7 @@ RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install 
      && apt-get update && apt-get install -y --no-install-recommends yarn \
      && yarn --version \
      && cd / && rm -rf $N_SRC_DIR;rm -rf /tmp/* \
-     && printf "EPB-DEBUG: Node 16, 18 and yarn installed."
+     && printf "EPB-DEBUG: Node 16, 18 and yarn installed.\n"
 
 #****************      END NODEJS     ****************************************************
 
@@ -150,7 +150,7 @@ RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install 
 ENV RUBY_31_VERSION="3.1.3"
 
 RUN rbenv install $RUBY_31_VERSION; rm -rf /tmp/*; rbenv global $RUBY_31_VERSION;ruby -v \
-    && printf "EPB-DEBUG: Ruby $RUBY_31_VERSION installed."
+    && printf "EPB-DEBUG: Ruby $RUBY_31_VERSION installed.\n"
 
 #**************** END RUBY *****************************************************
 
@@ -166,7 +166,7 @@ RUN set -ex \
     && pip3 install --no-cache-dir --upgrade --force-reinstall "pip==$PYTHON_PIP_VERSION" \
     && pip3 install --no-cache-dir --use-pep517 --upgrade "PyYAML==6.0" \
     && pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli boto3 pipenv virtualenv \
-RUN printf "EPB-DEBUG: Python $PYTHON_3_11_VERSION and PIP $PYTHON_PIP_VERSION installed."
+RUN printf "EPB-DEBUG: Python $PYTHON_3_11_VERSION and PIP $PYTHON_PIP_VERSION installed.\n"
 
 #**************** END PYTHON *****************************************************
 

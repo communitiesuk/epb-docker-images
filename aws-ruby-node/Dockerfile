@@ -10,7 +10,7 @@ RUN mkdir bundle-deps \
     && bundle install \
     && cd .. \
     && rm -r bundle-deps \
-    && printf "EPB-DEBUG: Register API dependencies installed."
+    && printf "EPB-DEBUG: Register API dependencies installed.\n"
 
 RUN mkdir bundle-deps \
     && cd bundle-deps \
@@ -19,7 +19,7 @@ RUN mkdir bundle-deps \
     && bundle install \
     && cd .. \
     && rm -r bundle-deps \
-    && printf "EPB-DEBUG: Frontend dependencies installed."
+    && printf "EPB-DEBUG: Frontend dependencies installed.\n"
 
 RUN mkdir bundle-deps \
     && cd bundle-deps \
@@ -28,7 +28,7 @@ RUN mkdir bundle-deps \
     && bundle install \
     && cd .. \
     && rm -r bundle-deps \
-    && printf "EPB-DEBUG: Auth server dependencies installed."
+    && printf "EPB-DEBUG: Auth server dependencies installed.\n"
 
 RUN mkdir bundle-deps \
     && cd bundle-deps \
@@ -37,6 +37,6 @@ RUN mkdir bundle-deps \
     && bundle install \
     && cd .. \
     && rm -r bundle-deps \
-    && printf "EPB-DEBUG: Data warehouse dependencies installed."
+    && printf "EPB-DEBUG: Data warehouse dependencies installed.\n"
 
 ENTRYPOINT ["dockerd-entrypoint.sh"]
