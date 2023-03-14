@@ -67,7 +67,8 @@ RUN set -ex \
     && apt-get update \
     && apt-get install -y google-chrome-stable \
     && sed -i 's|HERE/chrome"|HERE/chrome" --disable-setuid-sandbox --no-sandbox|g' "/opt/google/chrome/google-chrome" \
-    && google-chrome --version
+    && google-chrome --version \
+    && printf "Chrome installed."
 
 # Install ChromeDriver
 RUN set -ex \
@@ -79,7 +80,8 @@ RUN set -ex \
     && mv /opt/chromedriver /opt/chromedriver-$CHROME_DRIVER_VERSION \
     && chmod 755 /opt/chromedriver-$CHROME_DRIVER_VERSION \
     && ln -s /opt/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver \
-    && chromedriver --version
+    && chromedriver --version \
+    && printf "Chromedriver installed."
 
 # AWS Tools
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html
@@ -87,7 +89,8 @@ RUN curl -sS -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3.us-we
     && curl -sS -o /usr/local/bin/kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl \
     && curl -sS -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest \
     && curl -sS -L https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz | tar xz -C /usr/local/bin \
-    && chmod +x /usr/local/bin/kubectl /usr/local/bin/aws-iam-authenticator /usr/local/bin/ecs-cli /usr/local/bin/eksctl
+    && chmod +x /usr/local/bin/kubectl /usr/local/bin/aws-iam-authenticator /usr/local/bin/ecs-cli /usr/local/bin/eksctl \
+    && printf "AWS tools installed."
 
 # Install AWS CLI v2
 # https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
@@ -96,7 +99,8 @@ RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscli
     && /opt/aws/install -i /usr/local/aws-cli -b /usr/local/bin \
     && rm /tmp/awscliv2.zip \
     && rm -rf /opt/aws \
-    && aws --version
+    && aws --version \
+    && printf "AWS CLI v2 installed."
 
 # Install env tools for runtimes
 
@@ -104,7 +108,7 @@ RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscli
 ARG SRC_DIR="/usr/src"
 ARG N_SRC_DIR="$SRC_DIR/n"
 RUN git clone https://github.com/tj/n $N_SRC_DIR \
-     && cd $N_SRC_DIR && make install
+    && cd $N_SRC_DIR && make install
 
 #ruby
 ARG RBENV_SRC_DIR="/usr/local/rbenv"
@@ -136,7 +140,8 @@ RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install 
      && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
      && apt-get update && apt-get install -y --no-install-recommends yarn \
      && yarn --version \
-     && cd / && rm -rf $N_SRC_DIR;rm -rf /tmp/*
+     && cd / && rm -rf $N_SRC_DIR;rm -rf /tmp/* \
+     && printf "Node 16, 18 and yarn installed."
 
 #****************      END NODEJS     ****************************************************
 
@@ -144,7 +149,8 @@ RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install 
 
 ENV RUBY_31_VERSION="3.1.3"
 
-RUN rbenv install $RUBY_31_VERSION; rm -rf /tmp/*; rbenv global $RUBY_31_VERSION;ruby -v
+RUN rbenv install $RUBY_31_VERSION; rm -rf /tmp/*; rbenv global $RUBY_31_VERSION;ruby -v \
+    && printf "Ruby $RUBY_31_VERSION installed."
 
 #**************** END RUBY *****************************************************
 
