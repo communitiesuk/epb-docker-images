@@ -165,7 +165,7 @@ RUN   pyenv global  $PYTHON_3_11_VERSION
 RUN set -ex \
     && pip3 install --no-cache-dir --upgrade --force-reinstall "pip==$PYTHON_PIP_VERSION" \
     && pip3 install --no-cache-dir --use-pep517 --upgrade "PyYAML==6.0" \
-    && pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli boto3 pipenv virtualenv \
+    && pip3 install --no-cache-dir --upgrade setuptools wheel aws-sam-cli boto3 pipenv virtualenv
 RUN printf "EPB-DEBUG: Python $PYTHON_3_11_VERSION and PIP $PYTHON_PIP_VERSION installed.\n"
 
 #**************** END PYTHON *****************************************************
