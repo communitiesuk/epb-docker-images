@@ -205,6 +205,13 @@ RUN set -ex \
 VOLUME /var/lib/docker
 #*********************** END  DOCKER  ****************************
 
+#****************  PAKETO    *********************************************
+# Install Paketo
+RUN add-apt-repository ppa:cncf-buildpacks/pack-cli \
+    && apt-get install pack-cli   
+    
+#*********************** END PAKETO  ****************************
+
 #=======================End of layer: corretto  =================
 FROM runtimes_n_corretto AS std_v5
 
@@ -222,3 +229,5 @@ COPY dockerd-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["dockerd-entrypoint.sh"]
 
 #=======================END of STD:5.0  =================
+
+
