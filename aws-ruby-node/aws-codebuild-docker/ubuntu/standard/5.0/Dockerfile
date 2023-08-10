@@ -60,29 +60,6 @@ RUN useradd codebuild-user
 
 FROM core AS tools
 
-# Install Chrome
-RUN set -ex \
-    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google.list \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable \
-    && sed -i 's|HERE/chrome"|HERE/chrome" --disable-setuid-sandbox --no-sandbox|g' "/opt/google/chrome/google-chrome" \
-    && google-chrome --version \
-    && printf "EPB-DEBUG: Chrome installed.\n"
-
-# Install ChromeDriver
-RUN set -ex \
-    && CHROME_VERSION=`google-chrome --version | awk -F '[ .]' '{print $3"."$4"."$5}'` \
-    && CHROME_DRIVER_VERSION=`wget -nv -qO- chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION` \
-    && wget -nv -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
-    && unzip /tmp/chromedriver_linux64.zip -d /opt \
-    && rm /tmp/chromedriver_linux64.zip \
-    && mv /opt/chromedriver /opt/chromedriver-$CHROME_DRIVER_VERSION \
-    && chmod 755 /opt/chromedriver-$CHROME_DRIVER_VERSION \
-    && ln -s /opt/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver \
-    && chromedriver --version \
-    && printf "EPB-DEBUG: Chromedriver installed.\n"
-
 # AWS Tools
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html
 RUN curl -sS -o /usr/local/bin/aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator \
@@ -144,6 +121,22 @@ RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install 
      && printf "EPB-DEBUG: Node 16, 18 and yarn installed.\n"
 
 #****************      END NODEJS     ****************************************************
+
+#****************      CHROME/ CHROMEDRIVER *****************************
+
+# using Chrome For Testing to ensure same Chrome/Chromedriver versions @see https://developer.chrome.com/blog/chrome-for-testing/
+
+# Install Chrome
+RUN set -ex \
+    && npx @puppeteer/browsers install chrome@stable \
+    && printf "EPB-DEBUG: Chrome installed.\n"
+
+# Install ChromeDriver
+RUN set -ex \
+    && npx @puppeteer/browsers install chromedriver@stable \
+    && printf "EPB-DEBUG: Chromedriver installed.\n"
+
+#****************       END CHROME/ CHROMEDRIVER
 
 #**************** RUBY *********************************************************
 
