@@ -200,7 +200,7 @@ VOLUME /var/lib/docker
 
 #****************  PAKETO    *********************************************
 # Install pack-cli for Paketo
-RUN (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.30.0-rc1/pack-v0.30.0-rc1-linux.tgz" | sudo tar -C /usr/local/bin/ --no-same-owner -xzv pack)   
+RUN (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.30.0-rc1/pack-v0.30.0-rc1-linux.tgz" | tar -C /usr/local/bin/ --no-same-owner -xzv pack)   
     
 #*********************** END PAKETO  ****************************
 
