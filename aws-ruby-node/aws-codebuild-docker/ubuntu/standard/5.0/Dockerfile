@@ -122,6 +122,17 @@ RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install 
 
 #****************      END NODEJS     ****************************************************
 
+#****************      CYPRESS SUPPORT       *********************
+
+# ensure Cypress requirements are installed in environment
+# @see https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies
+
+RUN set -ex \
+     && echo "Install dependencies for Cypress" \
+     && apt-get install -y --no-install-recommends libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+
+#****************      END CYPRESS SUPPORT   *********************
+
 #****************      CHROME/ CHROMEDRIVER *****************************
 
 # using Chrome For Testing to ensure same Chrome/Chromedriver versions @see https://developer.chrome.com/blog/chrome-for-testing/
