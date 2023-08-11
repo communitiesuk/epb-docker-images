@@ -17,11 +17,11 @@ phases:
   build:
     commands:
       - docker build -t aws-standard-ubuntu aws-codebuild-docker/ubuntu/standard/5.0
-      - docker build -t $REPOSITORY_URI ./
+      - docker build -t $ECR_NAME ./
 
   post_build:
     commands:
       - docker run --entrypoint "cf" $REPOSITORY_URI
       - docker push $REPOSITORY_URI:latest
-      - docker tag $REPOSITORY_URI $REPOSITORY_URI:$IMAGE_TAG
+      - docker tag $ECR_NAME $REPOSITORY_URI:$IMAGE_TAG
       - docker push $REPOSITORY_URI:$IMAGE_TAG
