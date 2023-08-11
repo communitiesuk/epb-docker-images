@@ -199,9 +199,8 @@ VOLUME /var/lib/docker
 #*********************** END  DOCKER  ****************************
 
 #****************  PAKETO    *********************************************
-# Install Paketo
-RUN add-apt-repository ppa:cncf-buildpacks/pack-cli \
-    && apt-get install pack-cli   
+# Install pack-cli for Paketo
+RUN (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.30.0-rc1/pack-v0.30.0-rc1-linux.tgz" | sudo tar -C /usr/local/bin/ --no-same-owner -xzv pack)   
     
 #*********************** END PAKETO  ****************************
 
