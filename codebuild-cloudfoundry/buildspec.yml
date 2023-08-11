@@ -6,8 +6,6 @@ phases:
       docker: 18
     commands:
       - cd codebuild-cloudfoundry/
-      - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
-      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
 
   pre_build:
     commands:
@@ -18,7 +16,6 @@ phases:
 
   build:
     commands:
-      - docker build -t aws-standard-ubuntu aws-codebuild-docker/ubuntu/standard/5.0
       - docker build -t $REPOSITORY_URI ./
 
   post_build:
