@@ -60,28 +60,46 @@ RUN useradd codebuild-user
 
 FROM core AS tools
 
+#****************      NODEJS     ****************************************************
+
+ENV NODE_16_VERSION="16.17.1"
+ENV NODE_18_VERSION="18.13.0"
+
+RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
+     && n $NODE_16_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
+     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+     && apt-get update && apt-get install -y --no-install-recommends yarn \
+     && yarn --version \
+     && cd / && rm -rf $N_SRC_DIR;rm -rf /tmp/* \
+     && printf "EPB-DEBUG: Node 16, 18 and yarn installed.\n"
+
+#****************      END NODEJS     ****************************************************
+
+
+#****************      CYPRESS SUPPORT       *********************
+
+# ensure Cypress requirements are installed in environment
+# @see https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies
+
+RUN set -ex \
+     && echo "Install dependencies for Cypress" \
+     && apt-get install -y --no-install-recommends libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+
+#****************      END CYPRESS SUPPORT   *********************
+
+
 # Install Chrome
 RUN set -ex \
-    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google.list \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable \
-    && sed -i 's|HERE/chrome"|HERE/chrome" --disable-setuid-sandbox --no-sandbox|g' "/opt/google/chrome/google-chrome" \
-    && google-chrome --version \
-    && printf "Chrome installed.\n"
+    && npx @puppeteer/browsers install chrome@stable \
+    && printf "EPB-DEBUG: Chrome installed.\n"
 
 # Install ChromeDriver
 RUN set -ex \
-    && CHROME_VERSION=`google-chrome --version | awk -F '[ .]' '{print $3"."$4"."$5}'` \
-    && CHROME_DRIVER_VERSION=`wget -nv -qO- chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION` \
-    && wget -nv -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
-    && unzip /tmp/chromedriver_linux64.zip -d /opt \
-    && rm /tmp/chromedriver_linux64.zip \
-    && mv /opt/chromedriver /opt/chromedriver-$CHROME_DRIVER_VERSION \
-    && chmod 755 /opt/chromedriver-$CHROME_DRIVER_VERSION \
-    && ln -s /opt/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver \
-    && chromedriver --version \
-    && printf "Chromedriver installed.\n"
+    && npx @puppeteer/browsers install chromedriver@stable \
+    && printf "EPB-DEBUG: Chromedriver installed.\n"
+
+#****************       END CHROME/ CHROMEDRIVER
 
 # AWS Tools
 # https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html
@@ -104,7 +122,7 @@ RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscli
 
 # Install env tools for runtimes
 
-#nodejs
+
 ARG SRC_DIR="/usr/src"
 ARG N_SRC_DIR="$SRC_DIR/n"
 RUN git clone https://github.com/tj/n $N_SRC_DIR \
@@ -129,21 +147,6 @@ ENV PATH="/root/.pyenv/shims:/root/.pyenv/bin:$PATH"
 #=======================End of layer: tools  =================
 FROM tools AS runtimes
 
-#****************      NODEJS     ****************************************************
-
-ENV NODE_16_VERSION="16.17.1"
-ENV NODE_18_VERSION="18.13.0"
-
-RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
-     && n $NODE_16_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
-     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-     && apt-get update && apt-get install -y --no-install-recommends yarn \
-     && yarn --version \
-     && cd / && rm -rf $N_SRC_DIR;rm -rf /tmp/* \
-     && printf "Node 16, 18 and yarn installed.\n"
-
-#****************      END NODEJS     ****************************************************
 
 #**************** RUBY *********************************************************
 
