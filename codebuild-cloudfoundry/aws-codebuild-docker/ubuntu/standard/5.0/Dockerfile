@@ -63,6 +63,11 @@ FROM core AS tools
 
 #****************      NODEJS     ****************************************************
 
+ARG SRC_DIR="/usr/src"
+ARG N_SRC_DIR="$SRC_DIR/n"
+RUN git clone https://github.com/tj/n $N_SRC_DIR \
+    && cd $N_SRC_DIR && make install
+
 ENV NODE_16_VERSION="16.17.1"
 ENV NODE_18_VERSION="18.13.0"
 
