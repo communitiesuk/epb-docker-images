@@ -49,6 +49,7 @@ RUN set -ex \
           python-openssl rsync sgml-base sgml-data stunnel \
           tar tcl tcl8.6 tk tk-dev unzip wget xfsprogs xml-core xmlto xsltproc \
           libzip5 libzip-dev vim xvfb xz-utils zip zlib1g-dev \
+          libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb \
     && rm -rf /var/lib/apt/lists/*
 
 ENV LC_CTYPE="C.UTF-8"
@@ -76,18 +77,18 @@ RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install 
 
 #****************      END NODEJS     ****************************************************
 
-
 #****************      CYPRESS SUPPORT       *********************
 
 # ensure Cypress requirements are installed in environment
 # @see https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies
 
-RUN set -ex \
-     && echo "Install dependencies for Cypress" \
-     && apt-get install -y --no-install-recommends libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+# NB. the following packages are added instead to the initial package install further up this script
+
+# RUN set -ex \
+#      && echo "Install dependencies for Cypress" \
+#      && apt-get install -y --no-install-recommends libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
 #****************      END CYPRESS SUPPORT   *********************
-
 
 # Install Chrome
 RUN set -ex \
