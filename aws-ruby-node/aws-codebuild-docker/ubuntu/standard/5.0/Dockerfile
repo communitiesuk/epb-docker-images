@@ -109,7 +109,7 @@ FROM tools AS runtimes
 #****************      NODEJS     ****************************************************
 
 ENV NODE_16_VERSION="16.17.1"
-ENV NODE_18_VERSION="18.13.0"
+ENV NODE_18_VERSION="18.13.1"
 
 RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
      && n $NODE_16_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
