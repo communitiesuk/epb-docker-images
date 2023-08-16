@@ -102,8 +102,7 @@ RUN set -ex \
 
 # Install ChromeDriver
 RUN set -ex \
-    && npx @puppeteer/browsers install chromedriver@stable \
-    && echo $PATH \
+    && npx @puppeteer/browsers install chromedriver@stable --path /usr/bin \
     && printf "EPB-DEBUG: Chromedriver installed.\n"
 
 #****************       END CHROME/ CHROMEDRIVER
