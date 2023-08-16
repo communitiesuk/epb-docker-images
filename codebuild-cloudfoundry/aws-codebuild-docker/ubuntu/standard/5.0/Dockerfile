@@ -98,11 +98,13 @@ RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install 
 # Install Chrome
 RUN set -ex \
     && npx @puppeteer/browsers install chrome@stable --path /usr/bin \
+    && google-chrome --version \
     && printf "EPB-DEBUG: Chrome installed.\n"
 
 # Install ChromeDriver
 RUN set -ex \
     && npx @puppeteer/browsers install chromedriver@stable --path /usr/bin \
+    && chromedriver --version \
     && printf "EPB-DEBUG: Chromedriver installed.\n"
 
 #****************       END CHROME/ CHROMEDRIVER
