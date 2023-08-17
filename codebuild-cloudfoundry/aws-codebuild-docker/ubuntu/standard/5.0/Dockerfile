@@ -99,15 +99,18 @@ RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install 
 
 # Install Chrome
 RUN set -ex \
-    && CHROME_LOCATION=`npx @puppeteer/browsers install chrome@stable --path /opt | awk '{print $2}'` \
-    && ln -s $CHROME_LOCATION /usr/bin/chrome \
-    && ln -s $CHROME_LOCATION /usr/bin/google-chrome \
+    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google.list \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable \
+    && sed -i 's|HERE/chrome"|HERE/chrome" --disable-setuid-sandbox --no-sandbox|g' "/opt/google/chrome/google-chrome" \
     && google-chrome --version \
-    && printf "EPB-DEBUG: Chrome installed.\n"
+    && printf "Chrome installed.\n"
 
 # Install ChromeDriver
 RUN set -ex \
-    && CHROMEDRIVER_LOCATION=`npx @puppeteer/browsers install chromedriver@stable --path /opt | awk '{print $2}'` \
+    && CHROME_VERSION=`google-chrome --version | awk -F '[ .]' '{print $3"."$4"."$5"."$6}'` \
+    && CHROMEDRIVER_LOCATION=`npx @puppeteer/browsers install chromedriver@$CHROME_VERSION --path /opt | awk '{print $2}'` \
     && ln -s $CHROMEDRIVER_LOCATION /usr/bin/chromedriver \
     && chromedriver --version \
     && printf "EPB-DEBUG: Chromedriver installed.\n"
