@@ -109,7 +109,7 @@ RUN set -ex \
 
 # Install ChromeDriver
 RUN set -ex \
-    && CHROME_VERSION=`google-chrome --version | awk -F '[ .]' '{print $3"."$4"."$5"."$6}'` \
+    && CHROME_VERSION=`google-chrome --version | awk -F '[ .]' '{print $3}'` \
     && CHROMEDRIVER_LOCATION=`npx @puppeteer/browsers install chromedriver@$CHROME_VERSION --path /opt | awk '{print $2}'` \
     && ln -s $CHROMEDRIVER_LOCATION /usr/bin/chromedriver \
     && chromedriver --version \
