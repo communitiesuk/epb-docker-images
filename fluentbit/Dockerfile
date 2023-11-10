@@ -1,4 +1,4 @@
-FROM public.ecr.aws/aws-observability/aws-for-fluent-bit:latest
+FROM fluent/fluent-bit:latest
 
 ENV LOG_LEVEL=debug
 
