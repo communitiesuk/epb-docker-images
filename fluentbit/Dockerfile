@@ -23,5 +23,9 @@ RUN echo "deb http://deb.debian.org/debian bullseye-backports main" >> /etc/apt/
 COPY --from=builder /fluent-bit /fluent-bit
 EXPOSE 2020
 
+ADD fluent-bit.conf /fluent-bit.conf
+
+ENV LOG_LEVEL=debug
+
 # No entry point so we can just shell in
 CMD ["/fluent-bit/bin/fluent-bit", "-c", "/fluent-bit/etc/fluent-bit.conf"]
