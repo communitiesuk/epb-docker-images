@@ -1,11 +1,5 @@
-FROM bitnami/fluent-bit:latest
-
-USER root
-RUN install_packages curl
-USER 1001
+FROM fluent/fluent-bit:latest-debug
 
 ENV LOG_LEVEL=debug
 
 ADD fluent-bit.conf /fluent-bit.conf
-
-EXPOSE 2020
