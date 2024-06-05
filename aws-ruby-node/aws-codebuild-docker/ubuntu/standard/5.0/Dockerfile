@@ -159,10 +159,10 @@ RUN set -ex \
 
 #**************** RUBY *********************************************************
 
-ENV RUBY_31_VERSION="3.1.4"
+ENV RUBY_33_VERSION="3.3.2"
 
-RUN rbenv install $RUBY_31_VERSION; rm -rf /tmp/*; rbenv global $RUBY_31_VERSION;ruby -v \
-    && printf "EPB-DEBUG: Ruby $RUBY_31_VERSION installed.\n"
+RUN rbenv install $RUBY_33_VERSION; rm -rf /tmp/*; rbenv global $RUBY_33_VERSION;ruby -v \
+    && printf "EPB-DEBUG: Ruby $RUBY_33_VERSION installed.\n"
 
 #**************** END RUBY *****************************************************
 
@@ -230,7 +230,7 @@ FROM runtimes_n_corretto AS std_v5
 # Activate runtime versions specific to image version.
 RUN n $NODE_16_VERSION
 RUN pyenv  global $PYTHON_3_11_VERSION
-RUN rbenv  global $RUBY_31_VERSION
+RUN rbenv  global $RUBY_33_VERSION
 RUN gem install bundler:2.3.22
 
 # Configure SSH
