@@ -1,4 +1,4 @@
-FROM fluent/fluent-bit:latest as builder
+FROM fluent/fluent-bit:3.0.6 as builder
 FROM debian:bullseye-slim as debug
 ENV DEBIAN_FRONTEND noninteractive
 
