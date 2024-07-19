@@ -159,7 +159,7 @@ RUN set -ex \
 
 #**************** RUBY *********************************************************
 
-ENV RUBY_33_VERSION="3.3.2"
+ENV RUBY_33_VERSION="3.3.4"
 
 RUN rbenv install $RUBY_33_VERSION; rm -rf /tmp/*; rbenv global $RUBY_33_VERSION;ruby -v \
     && printf "EPB-DEBUG: Ruby $RUBY_33_VERSION installed.\n"
