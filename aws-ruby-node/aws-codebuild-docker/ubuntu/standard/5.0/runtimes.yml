@@ -23,3 +23,7 @@ runtimes:
         commands:
           - echo "Installing Node.js version 18 ..."
           - n $NODE_18_VERSION
+      20:
+        commands:
+          - echo "Installing Node.js version 20 ..."
+          - n $NODE_20_VERSION

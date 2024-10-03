@@ -110,15 +110,17 @@ FROM tools AS runtimes
 
 ENV NODE_16_VERSION="16.17.1"
 ENV NODE_18_VERSION="18.13.0"
+ENV NODE_20_VERSION="20.17.0"
 
-RUN     n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
+RUN     n $NODE_20_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
+     && n $NODE_18_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
      && n $NODE_16_VERSION && npm install --save-dev -g -f grunt && npm install --save-dev -g -f grunt-cli && npm install --save-dev -g -f webpack \
      && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
      && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
      && apt-get update && apt-get install -y --no-install-recommends yarn \
      && yarn --version \
      && cd / && rm -rf $N_SRC_DIR;rm -rf /tmp/* \
-     && printf "EPB-DEBUG: Node 16, 18 and yarn installed.\n"
+     && printf "EPB-DEBUG: Node 16, 18, 20 and yarn installed.\n"
 
 #****************      END NODEJS     ****************************************************
 
@@ -228,7 +230,7 @@ RUN add-apt-repository ppa:cncf-buildpacks/pack-cli \
 FROM runtimes_n_corretto AS std_v5
 
 # Activate runtime versions specific to image version.
-RUN n $NODE_16_VERSION
+RUN n $NODE_20_VERSION
 RUN pyenv  global $PYTHON_3_11_VERSION
 RUN rbenv  global $RUBY_33_VERSION
 RUN gem install bundler:2.3.22
