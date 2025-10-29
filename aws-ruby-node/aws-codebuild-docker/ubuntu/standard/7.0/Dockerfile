@@ -369,7 +369,7 @@ RUN set -ex \
     && git clone https://github.com/rbenv/ruby-build.git $RUBY_BUILD_SRC_DIR \
     && sh $RUBY_BUILD_SRC_DIR/install.sh
 
-ENV RUBY_34_VERSION="3.4.2" \
+ENV RUBY_34_VERSION="3.4.7" \
     RUBY_33_VERSION="3.3.7" \
     RUBY_32_VERSION="3.2.7" \
     RUBY_31_VERSION="3.1.6"
@@ -604,7 +604,7 @@ FROM runtimes AS std_v7
 RUN n --preserve $NODE_18_VERSION
 RUN pyenv global $PYTHON_311_VERSION
 RUN phpenv global $PHP_82_VERSION
-RUN rbenv global $RUBY_32_VERSION
+RUN rbenv global $RUBY_34_VERSION
 RUN goenv global $GOLANG_20_VERSION
 RUN dotnet new globaljson --force --sdk-version $DOTNET_6_GLOBAL_JSON_SDK_VERSION --roll-forward latestFeature
 
