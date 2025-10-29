@@ -243,78 +243,9 @@ RUN set -ex \
     && chromium --version \
     && chromium-browser --version
 
-# Install Mozilla Firefox
-RUN set -ex \
-    && add-apt-repository ppa:mozillateam/ppa \
-    && printf "Package: *\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 1001\n" > /etc/apt/preferences.d/mozilla \
-    && apt install -y -qq --no-install-recommends firefox \
-    && firefox --version
-
-# Install Geckodriver
-RUN set -ex \
-    && apt install -y -qq firefox-geckodriver \
-    && geckodriver --version
-
-# Install Selenium server
-RUN set -ex \
-    && SELENIUM_DOWNLOAD_URL=$(curl -sL https://api.github.com/repos/SeleniumHQ/selenium/releases/latest | jq -r ' .assets[] | select(.browser_download_url | contains("selenium-server") and endswith(".jar")) | .browser_download_url') \
-    && wget -q -P /usr/share/java $SELENIUM_DOWNLOAD_URL
 
 #=======================End of stage: tools  =================
 FROM tools AS runtimes
-
-#****************     .NET-CORE     *******************************************************
-
-# Dotnet
-ENV PATH="/root/.dotnet/:/root/.dotnet/tools/:$PATH"
-RUN set -ex  \
-    && wget -qO /usr/local/bin/dotnet-install.sh https://dot.net/v1/dotnet-install.sh \
-    && chmod +x /usr/local/bin/dotnet-install.sh
-
-ENV DOTNET_8_SDK_VERSION="8.0.411" \
-    DOTNET_6_SDK_VERSION="6.0.428" \
-    DOTNET_6_GLOBAL_JSON_SDK_VERSION="6.0.0" \
-    DOTNET_8_GLOBAL_JSON_SDK_VERSION="8.0.0"
-ENV DOTNET_ROOT="/root/.dotnet"
-
-# Add .NET Core 8 Global Tools install folder to PATH
-RUN  /usr/local/bin/dotnet-install.sh -v $DOTNET_8_SDK_VERSION \
-     && dotnet --list-sdks \
-     && rm -rf /tmp/*
-
-# Add .NET Core 6 Global Tools install folder to PATH
-RUN  /usr/local/bin/dotnet-install.sh -v $DOTNET_6_SDK_VERSION \
-     && dotnet --list-sdks \
-     && rm -rf /tmp/* \
-     && cd /codebuild && dotnet new globaljson --force --sdk-version $DOTNET_6_GLOBAL_JSON_SDK_VERSION --roll-forward latestFeature
-
-# Trigger the population of the local package cache
-ENV NUGET_XMLDOC_MODE skip
-RUN set -ex \
-    && mkdir warmup \
-    && cd warmup \
-    && dotnet new \
-    && cd .. \
-    && rm -rf warmup \
-    && rm -rf /tmp/NuGetScratch
-
-# Install Powershell Core
-# See instructions at https://learn.microsoft.com/en-us/powershell/scripting/install/install-other-linux?view=powershell-7.4#installation-using-a-binary-archive-file
-ARG POWERSHELL_VERSION=7.4.10
-ARG POWERSHELL_DOWNLOAD_URL=https://github.com/PowerShell/PowerShell/releases/download/v$POWERSHELL_VERSION/powershell-$POWERSHELL_VERSION-linux-x64.tar.gz
-ARG POWERSHELL_DOWNLOAD_SHA=d91b9172668f4b6aef4abce8c780cd298872c7a0f4487cc47444d26877ba49f6
-
-RUN set -ex \
-    && curl -SL $POWERSHELL_DOWNLOAD_URL --output powershell.tar.gz \
-    && echo "$POWERSHELL_DOWNLOAD_SHA powershell.tar.gz" | sha256sum -c - \
-    && mkdir -p /opt/microsoft/powershell/$POWERSHELL_VERSION \
-    && tar zxf powershell.tar.gz -C /opt/microsoft/powershell/$POWERSHELL_VERSION \
-    && rm powershell.tar.gz \
-    && chmod +x /opt/microsoft/powershell/$POWERSHELL_VERSION/pwsh \
-    && ln -s /opt/microsoft/powershell/$POWERSHELL_VERSION/pwsh /usr/bin/pwsh \
-    && pwsh --version
-#****************     END .NET-CORE     *******************************************************
-
 
 #****************      NODEJS     ****************************************************
 
