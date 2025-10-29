@@ -537,7 +537,6 @@ RUN pyenv global $PYTHON_311_VERSION
 RUN phpenv global $PHP_82_VERSION
 RUN rbenv global $RUBY_34_VERSION
 RUN goenv global $GOLANG_20_VERSION
-RUN dotnet new globaljson --force --sdk-version $DOTNET_6_GLOBAL_JSON_SDK_VERSION --roll-forward latestFeature
 
 # Configure SSH
 COPY ssh_config /root/.ssh/config
