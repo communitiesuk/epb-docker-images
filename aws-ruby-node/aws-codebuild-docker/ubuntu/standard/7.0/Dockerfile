@@ -42,7 +42,7 @@ RUN set -ex \
         libncurses5-dev libncursesw5-dev libonig-dev libpq-dev libreadline-dev \
         libsecret-1-dev libserf-1-1 libsodium-dev libsqlite3-dev libssl-dev \
         libsvn1 libsvn-perl libtcl8.6 libtidy-dev libtimedate-perl libtool libunwind8 \
-        libwebp-dev libxkbfile-dev libxml2-dev libxml2-utils libxslt1-dev libxss1 libnspr4 libnss3 \
+        libwebp-dev libxkbfile-dev libxml2-dev libxml2-utils libxslt1-dev libxss1 \
         libyaml-dev libyaml-perl libzip-dev llvm locales lz4 \
         m4 make mediainfo mercurial mlocate net-tools netbase netcat \
         openssl patch p7zip-full p7zip-rar parallel pass patchelf pigz pkg-config pollinate procps \
@@ -58,6 +58,18 @@ RUN apt-get update && \
     unattended-upgrade -v --dry-run && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+#extra packages recommened for chrome
+RUN apt-get install -y \
+    ibnspr4 libnss3 libgbm1 \
+    libasound2 libcups2 libx11-xcb1 \
+    libxcomposite1 libxdamage1 libxrandr2 \
+    libatk-bridge2.0-0 libatk1.0-0 \
+    libpangocairo-1.0-0 libxshmfence1 \
+    fonts-liberation xdg-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+
 
 ENV LC_CTYPE="C.UTF-8"
 
