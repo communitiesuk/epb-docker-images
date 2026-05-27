@@ -50,7 +50,7 @@ RUN set -ex \
         sgml-base sgml-data shellcheck sphinxsearch sqlite3 ssh sshpass subversion sudo swig systemd-coredump \
         tar tcl tcl8.6 telnet texinfo time tk tk-dev tzdata \
         unzip upx vim wget xfsprogs xml-core xmlto xorriso xsltproc \
-        xvfb xz-utils zip zlib1g-dev zsync \
+        xvfb xz-utils zip zlib1g-dev zsync  \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && \
@@ -220,7 +220,9 @@ RUN set -ex \
     && CHROME_DOWNLOAD_URL=$(curl -sL https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r '.channels.Stable.downloads.chrome[] | select(.platform == "linux64") | .url') \
     && curl -L $CHROME_DOWNLOAD_URL --output /tmp/chrome-linux64.zip \
     && unzip -q /tmp/chrome-linux64.zip -d /opt/chrome \
-    && rm -rf /tmp/*
+    && ln -s /opt/chrome /usr/local/bin/chrome \
+    && rm -rf /tmp/* \
+    && chrome --version
 
 # Install ChromeDriver
 # https://googlechromelabs.github.io/chrome-for-testing/
