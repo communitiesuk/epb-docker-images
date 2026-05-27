@@ -220,9 +220,8 @@ RUN set -eux; \
     unzip /tmp/chrome.zip -d /opt/; \
     mv /opt/chrome-linux64 /opt/chrome; \
     ln -s /opt/chrome/chrome /usr/bin/google-chrome; \
-    rm /tmp/chrome.zip
-
-RUN google-chrome --version
+    rm /tmp/chrome.zip \
+    && google-chrome --version
 
 
 # Install ChromeDriver
