@@ -218,11 +218,13 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
 # https://github.com/GoogleChromeLabs/chrome-for-testing#json-api-endpoints
 RUN set -ex \
     && CHROME_DOWNLOAD_URL=$(curl -sL https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r '.channels.Stable.downloads.chrome[] | select(.platform == "linux64") | .url') \
-    && curl -L $CHROME_DOWNLOAD_URL --output /tmp/chrome-linux64.zip \
+    && curl -L "$CHROME_DOWNLOAD_URL" --output /tmp/chrome-linux64.zip \
     && unzip -q /tmp/chrome-linux64.zip -d /opt/chrome \
-    && ln -s /opt/chrome /usr/local/bin/chrome \
-    && rm -rf /tmp/* \
-    && chrome --version
+    && chmod +x /opt/chrome/chrome-linux64/chrome \
+    && ln -s /opt/chrome/chrome-linux64/chrome /usr/local/bin/chrome \
+    && chrome --version \
+    && rm -rf /tmp/*
+
 
 # Install ChromeDriver
 # https://googlechromelabs.github.io/chrome-for-testing/
