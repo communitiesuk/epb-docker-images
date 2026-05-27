@@ -53,22 +53,17 @@ RUN set -ex \
         xvfb xz-utils zip zlib1g-dev zsync  \
     && rm -rf /var/lib/apt/lists/*
 
+#extra packages recommened for chrome
+RUN apt-get update && \
+    apt-get install -y \
+    libnspr4 libnss3 libasound2 \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN apt-get update && \
     apt-get install -y unattended-upgrades && \
     unattended-upgrade -v --dry-run && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-#extra packages recommened for chrome
-RUN apt-get install -y \
-    ibnspr4 libnss3 libgbm1 \
-    libasound2 libcups2 libx11-xcb1 \
-    libxcomposite1 libxdamage1 libxrandr2 \
-    libatk-bridge2.0-0 libatk1.0-0 \
-    libpangocairo-1.0-0 libxshmfence1 \
-    fonts-liberation xdg-utils \
-    && rm -rf /var/lib/apt/lists/*
-
 
 
 ENV LC_CTYPE="C.UTF-8"
