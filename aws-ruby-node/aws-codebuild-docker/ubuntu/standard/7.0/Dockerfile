@@ -220,8 +220,7 @@ RUN set -ex \
     && CHROME_DOWNLOAD_URL=$(curl -sL https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r '.channels.Stable.downloads.chrome[] | select(.platform == "linux64") | .url') \
     && curl -L $CHROME_DOWNLOAD_URL --output /tmp/chrome-linux64.zip \
     && unzip -q /tmp/chrome-linux64.zip -d /opt/chrome \
-    && rm -rf /tmp/* \
-    && google-chrome --version
+    && rm -rf /tmp/*
 
 # Install ChromeDriver
 # https://googlechromelabs.github.io/chrome-for-testing/
