@@ -42,7 +42,7 @@ RUN set -ex \
         libncurses5-dev libncursesw5-dev libonig-dev libpq-dev libreadline-dev \
         libsecret-1-dev libserf-1-1 libsodium-dev libsqlite3-dev libssl-dev \
         libsvn1 libsvn-perl libtcl8.6 libtidy-dev libtimedate-perl libtool libunwind8 \
-        libwebp-dev libxkbfile-dev libxml2-dev libxml2-utils libxslt1-dev libxss1 \
+        libwebp-dev libxkbfile-dev libxml2-dev libxml2-utils libxslt1-dev libxss1 libnspr4 libnss3 \
         libyaml-dev libyaml-perl libzip-dev llvm locales lz4 \
         m4 make mediainfo mercurial mlocate net-tools netbase netcat \
         openssl patch p7zip-full p7zip-rar parallel pass patchelf pigz pkg-config pollinate procps \
