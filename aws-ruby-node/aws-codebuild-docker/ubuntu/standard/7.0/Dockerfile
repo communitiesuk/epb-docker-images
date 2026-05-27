@@ -212,12 +212,18 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
     && apt update \
     && apt install gh -y
 
-# Install Chrome
-RUN set -ex \
-    && curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb --output /tmp/google-chrome-stable_current_amd64.deb \
-    && dpkg -i /tmp/google-chrome-stable_current_amd64.deb || apt-get install -f -y \
-    && rm -rf /tmp/* \
-    && google-chrome --version
+
+RUN set -eux; \
+    JSON_URL="https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json"; \
+    DOWNLOAD_URL=$(curl -s $JSON_URL | jq -r '.channels.Stable.downloads.chrome[] | select(.platform=="linux64") | .url'); \
+    curl -Lo /tmp/chrome.zip "$DOWNLOAD_URL"; \
+    unzip /tmp/chrome.zip -d /opt/; \
+    mv /opt/chrome-linux64 /opt/chrome; \
+    ln -s /opt/chrome/chrome /usr/bin/google-chrome; \
+    rm /tmp/chrome.zip
+
+RUN google-chrome --version
+
 
 # Install ChromeDriver
 # https://googlechromelabs.github.io/chrome-for-testing/
