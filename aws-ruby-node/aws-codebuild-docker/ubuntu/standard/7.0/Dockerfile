@@ -244,6 +244,16 @@ RUN set -ex \
     && rm -rf /tmp/* \
     && chromedriver --version
 
+# Check Chrome and ChromeDriver are at the same version
+RUN set -eux; \
+    CHROME_VERSION=$(chrome --version | awk '{print $NF}'); \
+    DRIVER_VERSION=$(chromedriver --version | awk '{print $2}'); \
+    \
+    echo "Chrome version: $CHROME_VERSION"; \
+    echo "ChromeDriver version: $DRIVER_VERSION"; \
+    \
+    test "$CHROME_VERSION" = "$DRIVER_VERSION"
+
 # Install Chromium
 # See instruction: https://www.chromium.org/getting-involved/download-chromium/
 RUN set -ex \
