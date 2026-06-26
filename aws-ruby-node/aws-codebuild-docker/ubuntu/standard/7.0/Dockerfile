@@ -278,7 +278,8 @@ ARG SRC_DIR="/usr/src"
 ARG N_SRC_DIR="$SRC_DIR/n"
 
 ENV NODE_18_VERSION="18.20.8" \
-    NODE_20_VERSION="20.19.2"
+    NODE_20_VERSION="20.19.2" \
+    NODE_22_VERSION="22.23.1"
 
 RUN git clone https://github.com/tj/n $N_SRC_DIR \
     && cd $N_SRC_DIR && make install
@@ -288,6 +289,11 @@ RUN n $NODE_18_VERSION && npm install --save-dev -g -f grunt \
     && npm install --save-dev -g -f webpack \
     && npm install --save-dev -g -f yarn \
     && n $NODE_20_VERSION && npm install --save-dev -g -f grunt \
+    && npm install --save-dev -g -f grunt-cli \
+    && npm install --save-dev -g -f webpack \
+    && npm install --save-dev -g -f yarn \
+    && cd / && rm -rf $N_SRC_DIR && rm -rf /tmp/* \
+    && n $NODE_22_VERSION && npm install --save-dev -g -f grunt \
     && npm install --save-dev -g -f grunt-cli \
     && npm install --save-dev -g -f webpack \
     && npm install --save-dev -g -f yarn \
