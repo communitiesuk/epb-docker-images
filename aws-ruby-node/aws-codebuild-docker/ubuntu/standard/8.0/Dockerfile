@@ -255,18 +255,24 @@ FROM tools AS runtimes
 ARG SRC_DIR="/usr/src"
 ARG N_SRC_DIR="$SRC_DIR/n"
 
-ENV NODE_22_VERSION="22.22.0" \
+ENV NODE_18_VERSION="18.20.8" \
+    NODE_20_VERSION="20.19.2" \
+    NODE_22_VERSION="22.22.0" \
     NODE_24_VERSION="24.14.0"
 
 RUN git clone https://github.com/tj/n $N_SRC_DIR \
     && cd $N_SRC_DIR && make install
 
 # Install all Node.js versions
-RUN n $NODE_22_VERSION && npm install --save-dev -g -f grunt grunt-cli webpack yarn && \
+RUN n $NODE_18_VERSION && npm install --save-dev -g -f grunt grunt-cli webpack yarn && \
+    n $NODE_20_VERSION && npm install --save-dev -g -f grunt grunt-cli webpack yarn && \
+    n $NODE_22_VERSION && npm install --save-dev -g -f grunt grunt-cli webpack yarn && \
     n $NODE_24_VERSION && npm install --save-dev -g -f grunt grunt-cli webpack yarn
 
 # Install npm 11.7.0 globally and copy to Node 22 and 24 cache locations
 RUN npm install -g npm@11.7.0 && \
+    cp -rf /usr/local/lib/node_modules/npm /usr/local/n/versions/node/$NODE_18_VERSION/lib/node_modules/ && \
+    cp -rf /usr/local/lib/node_modules/npm /usr/local/n/versions/node/$NODE_20_VERSION/lib/node_modules/ && \
     cp -rf /usr/local/lib/node_modules/npm /usr/local/n/versions/node/$NODE_22_VERSION/lib/node_modules/ && \
     cp -rf /usr/local/lib/node_modules/npm /usr/local/n/versions/node/$NODE_24_VERSION/lib/node_modules/
 
@@ -290,14 +296,12 @@ RUN set -ex \
     && git clone https://github.com/rbenv/ruby-build.git $RUBY_BUILD_SRC_DIR \
     && sh $RUBY_BUILD_SRC_DIR/install.sh
 
-ENV RUBY_40_VERSION="4.0.1" \
-    RUBY_34_VERSION="3.4.8" \
+ENV RUBY_34_VERSION="3.4.8" \
     RUBY_33_VERSION="3.3.10"
 
-RUN rbenv install $RUBY_40_VERSION \
-    && rbenv install $RUBY_34_VERSION \
+RUN rbenv install $RUBY_34_VERSION \
     && rbenv install $RUBY_33_VERSION \
-    && rbenv global $RUBY_40_VERSION && ruby -v \
+    && rbenv global $RUBY_34_VERSION && ruby -v \
     && rm -rf /tmp/*
 #**************** END RUBY *****************************************************
 
@@ -308,18 +312,14 @@ RUN curl -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master
 ENV PATH="/root/.pyenv/shims:/root/.pyenv/bin:$PATH"
 
 ENV PYTHON_314_VERSION="3.14.3" \
-    PYTHON_313_VERSION="3.13.12" \
-    PYTHON_312_VERSION="3.12.13" \
-    PYTHON_311_VERSION="3.11.15" \
-    PYTHON_310_VERSION="3.10.20" \
     PYTHON_PIP_VERSION="26.0.1" \
     PYYAML_VERSION="6.0.3" \
     PYTHON_SETUPTOOLS_VERSION="82.0.0" \
     PYTHON_CONFIGURE_OPTS="--enable-shared --enable-loadable-sqlite-extensions"
 
-#Install python 14, 13, 12, 11, 10
+#Install python 14
 RUN set -ex \
-    && for version in $PYTHON_314_VERSION $PYTHON_313_VERSION $PYTHON_312_VERSION $PYTHON_311_VERSION $PYTHON_310_VERSION; do \
+    && for version in $PYTHON_314_VERSION; do \
         pyenv install $version \
         && pyenv global $version \
         && pip3 install --no-cache-dir --upgrade --force-reinstall "pip==$PYTHON_PIP_VERSION" \
@@ -339,7 +339,7 @@ FROM runtimes AS std_v7
 # Activate runtime versions specific to image version.
 RUN n $NODE_24_VERSION
 RUN pyenv global $PYTHON_314_VERSION
-RUN rbenv global $RUBY_40_VERSION
+RUN rbenv global $RUBY_34_VERSION
 
 # Configure SSH
 COPY ssh_config /root/.ssh/config
