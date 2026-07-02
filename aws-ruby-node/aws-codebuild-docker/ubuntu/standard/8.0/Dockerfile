@@ -246,23 +246,6 @@ RUN set -ex \
     && chromium --version \
     && chromium-browser --version
 
-# Install Mozilla Firefox
-RUN set -ex \
-    && add-apt-repository ppa:mozillateam/ppa \
-    && printf "Package: *\nPin: release o=LP-PPA-mozillateam\nPin-Priority: 1001\n" > /etc/apt/preferences.d/mozilla \
-    && apt install -y -qq --no-install-recommends firefox \
-    && firefox --version
-
-# Install Geckodriver
-RUN set -ex \
-    && apt install -y -qq firefox-geckodriver \
-    && geckodriver --version
-
-# Install Selenium server
-RUN set -ex \
-    && SELENIUM_DOWNLOAD_URL=$(curl -sL https://api.github.com/repos/SeleniumHQ/selenium/releases/latest | jq -r ' .assets[] | select(.browser_download_url | contains("selenium-server") and endswith(".jar")) | .browser_download_url') \
-    && wget -q -P /usr/share/java $SELENIUM_DOWNLOAD_URL
-
 #=======================End of stage: tools  =================
 FROM tools AS runtimes
 
