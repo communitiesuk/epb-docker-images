@@ -339,11 +339,7 @@ FROM runtimes AS std_v7
 # Activate runtime versions specific to image version.
 RUN n $NODE_24_VERSION
 RUN pyenv global $PYTHON_314_VERSION
-RUN phpenv global $PHP_84_VERSION
 RUN rbenv global $RUBY_40_VERSION
-RUN goenv global $GOLANG_26_VERSION
-RUN rustup default $RUST_93_VERSION
-RUN dotnet new globaljson --force --sdk-version $DOTNET_10_GLOBAL_JSON_SDK_VERSION --roll-forward latestFeature
 
 # Configure SSH
 COPY ssh_config /root/.ssh/config
