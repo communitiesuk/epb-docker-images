@@ -337,7 +337,7 @@ RUN set -ex \
 FROM runtimes AS std_v7
 
 # Activate runtime versions specific to image version.
-RUN n $NODE_24_VERSION
+RUN n $NODE_18_VERSION
 RUN pyenv global $PYTHON_314_VERSION
 RUN rbenv global $RUBY_34_VERSION
 
