@@ -270,7 +270,7 @@ RUN n $NODE_18_VERSION && npm install --save-dev -g -f grunt grunt-cli webpack y
     n $NODE_24_VERSION && npm install --save-dev -g -f grunt grunt-cli webpack yarn
 
 # Install npm 11.7.0 globally and copy to Node 22 and 24 cache locations
-RUN npm install -g npm@11.7.0 && \
+RUN npm install -g npm@11.4.2 && \
     cp -rf /usr/local/lib/node_modules/npm /usr/local/n/versions/node/$NODE_18_VERSION/lib/node_modules/ && \
     cp -rf /usr/local/lib/node_modules/npm /usr/local/n/versions/node/$NODE_20_VERSION/lib/node_modules/ && \
     cp -rf /usr/local/lib/node_modules/npm /usr/local/n/versions/node/$NODE_22_VERSION/lib/node_modules/ && \
