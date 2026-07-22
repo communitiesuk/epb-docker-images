@@ -260,11 +260,9 @@ RUN set -ex \
     && git clone https://github.com/rbenv/ruby-build.git $RUBY_BUILD_SRC_DIR \
     && sh $RUBY_BUILD_SRC_DIR/install.sh
 
-ENV RUBY_34_VERSION="3.4.9" \
-    RUBY_33_VERSION="3.3.10"
+ENV RUBY_34_VERSION="3.4.9"
 
 RUN rbenv install $RUBY_34_VERSION \
-    && rbenv install $RUBY_33_VERSION \
     && rbenv global $RUBY_34_VERSION && ruby -v \
     && rm -rf /tmp/*
 
