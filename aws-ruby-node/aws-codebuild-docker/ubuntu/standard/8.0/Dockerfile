@@ -45,6 +45,7 @@ RUN set -ex \
         libsvn1 libsvn-perl libtcl8.6 libtidy-dev libtimedate-perl libtool libunwind8 \
         libwebp-dev libxkbfile-dev libxml2-dev libxml2-utils libxslt1-dev libxss1 \
         libyaml-dev libyaml-perl libzip-dev llvm locales lz4 \
+        libnspr4 libnss3 libasound2t64 \
         m4 make mediainfo mercurial net-tools netbase netcat-openbsd \
         openssl patch p7zip-full p7zip-rar parallel pass patchelf pigz pkg-config pollinate procps \
         python-is-python3 python3-configobj python3-openssl rpm rsync \
@@ -215,37 +216,6 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
     && apt update \
     && apt install gh -y
 
-# Install Chrome
-RUN set -ex \
-    && curl -L https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb --output /tmp/google-chrome-stable_current_amd64.deb \
-    && dpkg -i /tmp/google-chrome-stable_current_amd64.deb || apt-get install -f -y \
-    && rm -rf /tmp/* \
-    && google-chrome --version
-
-# Install ChromeDriver
-# https://googlechromelabs.github.io/chrome-for-testing/
-# https://github.com/GoogleChromeLabs/chrome-for-testing#json-api-endpoints
-RUN set -ex \
-    && CHROME_DRIVER_DOWNLOAD_URL=$(curl -sL https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json | jq -r '.channels.Stable.downloads.chromedriver[] | select(.platform == "linux64") | .url') \
-    && curl -L $CHROME_DRIVER_DOWNLOAD_URL --output /tmp/chromedriver-linux64.zip \
-    && unzip -q /tmp/chromedriver-linux64.zip -d /opt/chromedriver \
-    && ln -s /opt/chromedriver/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver \
-    && rm -rf /tmp/* \
-    && chromedriver --version
-
-# Install Chromium
-# See instruction: https://www.chromium.org/getting-involved/download-chromium/
-RUN set -ex \
-    && CHROMIUM_VERSION=$(curl -sL https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/Linux_x64%2FLAST_CHANGE?alt=media) \
-    && CHROMIUM_DOWNLOAD_URL=https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots/o/Linux_x64%2F$CHROMIUM_VERSION%2Fchrome-linux.zip?alt=media \
-    && curl -L $CHROMIUM_DOWNLOAD_URL --output /tmp/chromium-linux.zip \
-    && unzip -q /tmp/chromium-linux.zip -d /opt/chromium \
-    && ln -s /opt/chromium/chrome-linux/chrome /usr/local/bin/chromium \
-    && ln -s /opt/chromium/chrome-linux/chrome /usr/local/bin/chromium-browser \
-    && rm -rf /tmp/* \
-    && chromium --version \
-    && chromium-browser --version
-
 #=======================End of stage: tools  =================
 FROM tools AS runtimes
 
@@ -297,6 +267,12 @@ RUN rbenv install $RUBY_34_VERSION \
     && rbenv install $RUBY_33_VERSION \
     && rbenv global $RUBY_34_VERSION && ruby -v \
     && rm -rf /tmp/*
+
+# Use selenium manager to prefetch chrome and chrome driver
+# Run with SE_DEBUG=1 to debug
+RUN gem install selenium-webdriver
+RUN ruby -e 'require "selenium-webdriver";options = Selenium::WebDriver::Chrome::Options.new; options.args << "--no-sandbox"; options.args << "--headless"; Selenium::WebDriver.for(:chrome, options: options)'
+
 #**************** END RUBY *****************************************************
 
 #**************** PYTHON *****************************************************
