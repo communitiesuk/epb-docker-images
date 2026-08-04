@@ -162,6 +162,13 @@ RUN set -ex \
     && (curl -sSL "https://github.com/buildpacks/pack/releases/download/v${PACK_VERSION}/pack-v${PACK_VERSION}-linux.tgz" | tar -C /usr/local/bin/ --no-same-owner -xzv pack) \
     && pack --version
 
+# Install postgresql-client
+# https://www.postgresql.org/download/linux/ubuntu/
+RUN set -ex \
+    && apt-get install -y postgresql-common \
+    && /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y \
+    && apt-get install postgresql-client-18 -y
+
 #****************        DOCKER    *********************************************
 ARG DOCKER_BUCKET="download.docker.com"
 ARG DOCKER_CHANNEL="stable"
