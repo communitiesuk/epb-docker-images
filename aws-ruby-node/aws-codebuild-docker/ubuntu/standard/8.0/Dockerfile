@@ -240,10 +240,12 @@ RUN set -ex \
     && git clone https://github.com/rbenv/ruby-build.git $RUBY_BUILD_SRC_DIR \
     && sh $RUBY_BUILD_SRC_DIR/install.sh
 
-# To add a new version an ENV here, and a command to install the version
-# And then updated runtimes.yml to include the new version
+# To add a new version
+# 1. add an ENV here,
+# 2. add the command to install that version
+# 3. update runtimes.yml to include the new version
 # Remove any versions no longer in use
-ENV RUBY_40_VERSION="4.0.6" \
+ENV RUBY_40_VERSION="4.0.7" \
     RUBY_34_VERSION="3.4.9"
 
 RUN rbenv install $RUBY_40_VERSION \
