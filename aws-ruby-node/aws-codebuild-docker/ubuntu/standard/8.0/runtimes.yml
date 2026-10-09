@@ -25,7 +25,7 @@ runtimes:
       default:
         commands:
           - echo "Installing custom Ruby version $VERSION ..."
-          - rbenv install $VERSION
+          - rbenv install --skip-existing $VERSION
           - rbenv global $VERSION
   nodejs:
     versions:
