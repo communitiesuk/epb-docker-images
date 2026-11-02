@@ -18,10 +18,6 @@ runtimes:
         commands:
           - echo "Installing Ruby version 4.0 ..."
           - rbenv global $RUBY_40_VERSION
-      3.4:
-        commands:
-          - echo "Installing Ruby version 3.4 ..."
-          - rbenv global $RUBY_34_VERSION
       default:
         commands:
           - echo "Installing custom Ruby version $VERSION ..."

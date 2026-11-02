@@ -245,11 +245,9 @@ RUN set -ex \
 # 2. add the command to install that version
 # 3. update runtimes.yml to include the new version
 # Remove any versions no longer in use
-ENV RUBY_40_VERSION="4.0.9" \
-    RUBY_34_VERSION="3.4.9"
+ENV RUBY_40_VERSION="4.0.9"
 
 RUN rbenv install $RUBY_40_VERSION \
-    && rbenv install $RUBY_34_VERSION \
     && rbenv global $RUBY_40_VERSION && ruby -v \
     && rm -rf /tmp/*
 
